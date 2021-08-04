@@ -1,6 +1,12 @@
 {
   "name": "My Cool* Extension",
   "description": "*coolness not guaranteed",
+  "version": "0.1",
   "manifest_version": 3,
-  "version": "0.0"
+  "background": {
+	"service_worker": "background.js"
+  },
+  "permissions": ["storage","history"] 
 }
+
+  
