@@ -1,45 +1,33 @@
 try {
     var urlList = ["https://www.y8.com/", "https://www.newgrounds.com/"];
 
-    console.log("Welcome to the console! Don't fuck it up.\n\n");
-
-    // Search history chronologically w/o a filter, but only take 1 entry. Callback function parses raw array.
-
-    function checkUrl(url) {
-        for (let blockedUrl of urlList) {
-            if (url == blockedUrl) {
-                console.log("\nGiven URL: " + url + " matched with blocked URL: " + blockedUrl + "");
-                console.log();
-                return true;
-                break;
-            } else {
-                console.log("Given URL: " + url + " did not match blocked URL: " + blockedUrl);
-            }
-        }
-        console.log("\nGiven URL: " + url + " did not match any blocked URLs:");
-        console.log(urlList);
-    }
+    console.log("\n");
+    console.log("%c Welcome to the console! Don't fuck it up.", "background: #5500ff; color: #ffffff");
+    console.log("\n");
 
 
-    chrome.history.search({
-        text: '',
-        maxResults: 1
-    }, function(historyEntry) {
-        console.log("Latest website in browsing history fetched:");
-        console.log(historyEntry[0].url + "\n\n"); // Dead space included for improved console readability.
-
-
-        if (checkUrl(historyEntry[0].url) == true) {
+    function removeBlockedUrls() {
+        for (i in urlList) {
             chrome.history.deleteUrl({
-                "url": historyEntry[0].url
+                "url": urlList[i]
             });
-            console.log("\n" + historyEntry[0].url + " and all identical URLs have been deleted from the browser history.");
-        }
+            console.info(urlList[i] + "and all identical URLs have been removed from the browser history.");
+        };
+        console.log("%c History deletion complete. All blocked URLs have been removed from the browser history.", "background: #00dd00")
+        console.log(""); // Dead space for readability
+    };
+
+    chrome.tabs.onUpdated.addListener(function(tabId) { // Detect basically everything tab-related. New tabs, updates to the website on an existing tab, changing site on a tab. Good catch-all.
+        console.info("%c Tab ID #" + tabId + " updated. Deleting blocked URLs from history.", "background: #00dddd");
+        removeBlockedUrls();
+
     });
 
-    //checkUrl(latestEntry[0].url);
+    chrome.tabs.onRemoved.addListener(function(tabId) { // Detect when a tab is closed, seemingly the only thing onUpdated doesn't cover.
+        console.info("%c Tab ID #" + tabId + " closed. Deleting blocked URLs from history.", "background: #00ddff; color: #ffffff");
+        removeBlockedUrls();
 
-
+    });
 
 
 } catch (error) {
