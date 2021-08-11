@@ -1,12 +1,15 @@
 {
   "name": "URL-Specific History Blocker",
   "description": "Blocks certain URLs from appearing in the browser history.",
-  "version": "0.4",
+  "version": "0.5",
   "manifest_version": 3,
   "background": {
 	"service_worker": "background.js"
   },
-  "permissions": ["history", "tabs", "storage"] 
+  "permissions": ["history", "tabs", "storage"],
+  "action": {
+    "default_popup": "popup.html"
+  }  
 }
 
   
