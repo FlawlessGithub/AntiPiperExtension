@@ -1,0 +1,53 @@
+body {
+	background-color: white;
+	min-width: 300px;
+	min-height: 150px;
+} 
+
+div {
+	text-align: center;
+}
+
+h1 {
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+#currentUrl {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  color:
+}
+
+#toggleBlockingButton {
+  height: 60px;
+  width: 250px;
+  padding: 0px;
+  margin: auto;
+  border: 5px solid red;
+  background-color: white;
+  border-radius: 20px;
+  text-align: center;
+  transition: 0.5s;
+}
+
+#toggleBlockingButton:hover {
+  height: 60px;
+  width: 250px;
+  padding: 0px;
+  margin: auto;
+  border: 5px solid red;
+  background-color: red;
+  border-radius: 20px;
+  text-align: center;
+}
+
+button.current {
+  box-shadow: 0 0 0 2px white,
+              0 0 0 4px black;
+}
+
