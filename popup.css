@@ -1,53 +1,61 @@
 body {
-	background-color: white;
-	min-width: 300px;
-	min-height: 150px;
-} 
+    background-color: #EAEAEA;
+    /*border: 3px solid black;
+	border-radius: 20px;*/
+    min-width: 300px;
+    min-height: 175px;
+}
 
 div {
-	text-align: center;
+    text-align: center;
 }
 
 h1 {
-	text-align: center;
+    text-align: center;
 }
 
 h2 {
-	text-align: center;
+    text-align: center;
 }
 
+/*  color scheme:
+	Ebony white: #EAEAEA
+	NCS green: #009F6B;
+	NCS red: #C40233;
+	NCS blue: #0087BD;
+	*/
+
 #currentUrl {
-  margin: auto;
-  width: 50%;
-  text-align: center;
-  color:
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    color: #0087BD;
 }
 
 #toggleBlockingButton {
-  height: 60px;
-  width: 250px;
-  padding: 0px;
-  margin: auto;
-  border: 5px solid red;
-  background-color: white;
-  border-radius: 20px;
-  text-align: center;
-  transition: 0.5s;
+    border: 5px solid #009F6B;
+    background-color: white;
+    transition: 0.5s;
 }
 
 #toggleBlockingButton:hover {
-  height: 60px;
-  width: 250px;
-  padding: 0px;
-  margin: auto;
-  border: 5px solid red;
-  background-color: red;
-  border-radius: 20px;
-  text-align: center;
+    border: 5px solid #009F6B;
+    background-color: #009F6B;
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #009F6B;
 }
 
-button.current {
-  box-shadow: 0 0 0 2px white,
-              0 0 0 4px black;
+#toggleBlockingButton:active {
+    transition: background-color 0s;
+    transition: box-shadow 0s;
+    background-color: white;
+    box-shadow: none;
 }
 
+button {
+    height: 60px;
+    width: 250px;
+    margin: auto;
+    border-radius: 20px;
+    text-align: center;
+    color: #050404;
+}
