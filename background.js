@@ -1,10 +1,17 @@
-try {
-
+	// Startup code
     console.log("\n");
     console.log("%c Welcome to the console! Don't fuck it up.", "background: #5500ff; color: #ffffff");
     console.log("\n");
 
-    function getSearchHistory(amount, callback) {
+    var blockedDomainList = [
+        "https://www.y8.com/",
+        "https://www.w3schools.com/",
+        "https://developer.google.chrome/",
+        "https://www.github.com/"
+    ];
+	
+	// Functions
+	function getSearchHistory(amount, callback) {
 
         // Returns x amount latest entries in browser history as array.
         if (amount > 100) amount = 100; // API returns sub-arrays of 100 entries if >100 requested, breaking the program.
@@ -19,7 +26,7 @@ try {
             function searchHistoryHelper(results) {
                 console.log("Latest " + amount + " websites in browsing history fetched:");
                 console.log(results);
-                if (typeof callback == "function") callback(results); // 1-line ifs don't need {}. This does the callback function.
+                if (typeof callback == "function") callback(results); // 1-line ifs don't need {}.
             }
 
         );
@@ -55,27 +62,23 @@ try {
         console.log("All blocked URLs deleted from browser history.");
     }
 
-
-    var blockedDomainList = [
-        "https://www.y8.com/",
-        "https://www.w3schools.com/",
-        "https://developer.google.chrome/",
-        "https://www.github.com/"
-    ];
-
     function historyBusiness(amount) { // Combines all history kerfuffle into one function.
         getSearchHistory(amount, deleteBlocked);
     }
+	
 
-    chrome.tabs.onUpdated.addListener(function() { // Mainly covers URL changes in a tab, new tabs. Some other trivial things there too.
-        historyBusiness(3); // This event will trigger OFTEN. That's why it's such a narrow amount of entries.
-    });
-
-    chrome.tabs.onRemoved.addListener(function() { // Covers tab removal.
-        historyBusiness(100); // This event triggers far less often than the update, so do a "deeper clean", so to speak.
-    });
-
-
-} catch (error) {
-    console.error(error);
+async function getCurrentTabUrl() {
+	let queryOptions = { active: true, currentWindow: true };
+	let [tab] = await chrome.tabs.query(queryOptions);
+	return tab.url;
 }
+	
+	// Listeners
+//    chrome.tabs.onUpdated.addListener(function() { // Mainly covers URL changes in a tab, new tabs. Some other trivial things too.
+//        historyBusiness(3); // This event will trigger OFTEN. That's why it's such a narrow amount of entries.
+//		console.log(getCurrentTabUrl());
+//    });
+//    chrome.tabs.onRemoved.addListener(function() { // Covers tab removal.
+//        historyBusiness(100); // This event triggers far less often than the update, so do a "deeper clean", so to speak.
+//		console.log(getCurrentTabUrl());
+//    });
