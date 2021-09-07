@@ -1,14 +1,20 @@
 {
-  "name": "URL-Specific History Blocker",
+  "name": "URL-Specific Blocker",
   "description": "Blocks certain URLs from appearing in the browser history.",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 3,
   "background": {
 	"service_worker": "background.js"
   },
   "permissions": ["history", "tabs", "storage"],
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+	"default_icon": {
+      "16": "/icons/Icon16.png",
+      "32": "/icons/Icon32.png",
+      "48": "/icons/Icon48.png",
+      "128": "/icons/Icon128.png"
+    } 
   }  
 }
 
