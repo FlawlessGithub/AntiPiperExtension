@@ -11,6 +11,7 @@ async function getBlockList() { // Returns a promise containing the blockList ar
             if (Array.isArray(items) != true) { // If you fetched literally fucking nothing, make it an empty list, bonehead.
                 items = [];
             }
+			console.log("Fetched blockList.");
             resolve(items); // This is basically a return but for promises.
         });
     });
@@ -44,6 +45,7 @@ async function getCurrentTabDomain() { // Stealing & modifying Google's code jus
     };
     let [tab] = await chrome.tabs.query(queryOptions);
     let bananaSplit = tab.url.split("/");
+	console.log("Got current tab's domain.");
     return bananaSplit[0] + "//" + bananaSplit[2]; // Removes paths in URL by splitting at slashes, then concatenating strings.
 }
 
