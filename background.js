@@ -67,7 +67,7 @@ function deleteBlockedHistoryEntries(searchAmount) {
 
 try {
     chrome.tabs.onUpdated.addListener(function() { // Mainly covers URL changes in a tab, new tabs. Some other trivial things too.
-        deleteBlockedHistoryEntries(3);
+        deleteBlockedHistoryEntries(100);
     });
     chrome.tabs.onRemoved.addListener(function() { // Covers tab removal.
         deleteBlockedHistoryEntries(100);
