@@ -72,11 +72,17 @@ function updateTitleAndIcon(domain, blockList) {
         chrome.action.setIcon({
             "path": "/icons/Active/Active128.png"
         });
+        chrome.action.setTitle({
+            "title": "Blocker Active!"
+        });
 
     } else {
         chrome.action.setIcon({
             "path": "/icons/Inactive/Inactive128.png"
-        })
+        });
+        chrome.action.setTitle({
+            "title": "Blocker Inactive"
+        });
     }
 }
 
@@ -84,22 +90,37 @@ function updateTitleAndIcon(domain, blockList) {
 
 
 try {
-    chrome.tabs.onUpdated.addListener(function() { // Mainly covers URL changes in a tab, new tabs. Some other trivial things too.
-        getBlockList().then((blockList) => {
-            getSearchHistory(100).then((searchHistory) => {
-                deleteBlockedHistoryEntries(blockList, searchHistory);
-            });
+    var blockList = [];
+    getBlockList().then((fetchedBlockList) => {
+        blockList = fetchedBlockList;
+        console.log("hello!");
+        console.log(blockList)
+    });
+
+    chrome.storage.onChanged.addListener(function() {
+        console.log("The list updated...");
+        getBlockList().then((fetchedBlockList) => {
+            blockList = fetchedBlockList; //  This doesn't close here so the icon changes properly.
             getCurrentTabDomain().then((domain) => {
+                console.log("Updated icon in the goddamn storage listener")
                 updateTitleAndIcon(domain, blockList);
             });
         });
+    })
+
+    chrome.tabs.onUpdated.addListener(function() { // Mainly covers URL changes in a tab, new tabs. Some other trivial things too.
+        getSearchHistory(100).then((searchHistory) => {
+            deleteBlockedHistoryEntries(blockList, searchHistory);
+        });
+        getCurrentTabDomain().then((domain) => {
+            updateTitleAndIcon(domain, blockList);
+        });
     });
+
     chrome.tabs.onActivated.addListener(function() { // Makes cosmetic changes happen on tab switches.
-        getBlockList().then((blockList) => {
-            getCurrentTabDomain().then((domain) => {
-                updateTitleAndIcon(domain, blockList)
-            })
-        })
+        getCurrentTabDomain().then((domain) => {
+            updateTitleAndIcon(domain, blockList);
+        });
     });
 } catch (error) {
     console.error(error);
